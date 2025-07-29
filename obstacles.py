@@ -1,8 +1,15 @@
 import math
-from constants import BUILDING_RADIUS, DRONE_RADIUS, DRONE_WEIGHT, DRONE_HORIZONTAL_ANGLE, DRONE_VERTICAL_ANGLE, DRONE_MAX_SPEED, DRONE_ACCELERATION, DRONE_DECELERATION, DRONE_HORIZONTAL_TURNING_SPEED, DRONE_VERTICAL_TURNING_SPEED
+from constants import *
 # All objects that have a physical collision interaction are defined here
 
-
+class Enviroment():
+	def __init__():
+		self._x_upper = ENVIROMENT_X_UPPER_BOUND
+		self._x_lower = ENVIROMENT_X_LOWER_BOUND
+		self._y_upper = ENVIROMENT_Y_UPPER_BOUND
+		self._y_lower = ENVIROMENT_Y_UPPER_BOUND
+		self._z_upper = ENVIROMENT_Z_UPPER_BOUND
+		self._z_lower = ENVIROMENT_Z_LOWER_BOUND
 
 class Obstacles():
 	def __init__(self,x,y,z,radius):
@@ -23,8 +30,8 @@ class Building(Obstacles):
 
 # This object creates a sphere at position x,y,x with a radius of DRONE_RADIUS
 class Drone(Obstacles):
-	def __init__(self,x,y,z, radius=DRONE_RADIUS):
-		super().__init__(x,y,z,radius = DRONE_RADIUS)
+	def __init__(self,x,y,z,radius=DRONE_RADIUS):
+		super().__init__(x,y,z,radius)
 		self._weight = DRONE_WEIGHT
 		self._horizontal_angle = DRONE_HORIZONTAL_ANGLE
 		self._vertical_angle = DRONE_VERTICAL_ANGLE	
@@ -35,7 +42,7 @@ class Drone(Obstacles):
 	def get_velocity(self): return self._speed
 
 	# Updates the Drone parameters based on the input parameters
-	def user_input(self,input):
+	def user_input_updates(self,input):
 		if input.get_accelerate():
 			if self._speed <= DRONE_MAX_SPEED - DRONE_ACCELERATION:
 				self._speed += DRONE_ACCELERATION
@@ -53,6 +60,11 @@ class Drone(Obstacles):
 		elif input.get_down():
 			self._vertical_angle -+ DRONE_VERTICAL_TURNING_SPEED
 
+	# Update the cartesian coordinates, given any deviation from the y axis starting orientation
+	def update_position(self):
+		self.x += self._speed * math.sin(math.radians(self._horizontal_angle))
+		self.y += self._speed * math.cos(math.radians(self._horizontal_angle))
+		self.z += self._speed * math.sin(math.radians(self._vertical_angle))
 
 	#  Shows building to drone if in rendering distance
 	def render_building(self):
@@ -79,11 +91,33 @@ class Drone(Obstacles):
 			print(2)
 			return False
 		
-		print(f"The Drone collided whilst at position: \nx = {self._x}\ny = {self._y}\nz = {self._z}\n")
+		print(f"The Drone collided with a building whilst at position: \nx = {self._x}\ny = {self._y}\nz = {self._z}\n")
 		return True
-	
-	def update_position(self):
-		self.x += self._speed * math.sin(math.radians(self._horizontal_angle))
-		self.y += self._speed * math.cos(math.radians(self._horizontal_angle))
-		self.z += self._speed * math.sin(math.radians(self._vertical_angle))
 
+	def enviroment_collision(self,enviroment):
+		if not isinstance(enviroment,Enviroment):
+			raise TypeError("enviroment Object should be an Enviroment object")
+		
+		def collision_text(self):
+			print(f"The Drone collided with the enviroment whilst at position: \nx = {self._x}\ny = {self._y}\nz = {self._z}\n")
+
+		if self._z - self.radius < enviroment._z_lower:
+			self.collision_text()
+			return True
+		elif self._z + self.radius > enviroment._z_upper:
+			self.collision_text()
+			return True
+		elif self._x - self.radius < enviroment._x_lower:
+			self.collision_text()
+			return True
+		elif self._x + self.radius > enviroment._x_upper:
+			self.collision_text()
+			return True
+		elif self._y - self.radius > enviroment._y_lower:
+			self.collision_text()
+			return True
+		elif self._y + self.radius < enviroment._y_upper:
+			self.collision_text()
+			return True
+		
+		return False
