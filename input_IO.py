@@ -14,7 +14,7 @@ class Input():
 	def get_up(self): return self.__up
 	def get_down(self): return self.__down
 	
-	# Converts from a six long bit stream to drone input object, (0:1 for acceleration, 2:3 for horizontal turning, 4:5 for vertical turning)
+	# Converts from a six long bit stream to drone input object, (0:2 for acceleration, 2:4 for horizontal turning, 4:6 for vertical turning)
 	def convert_bitstream(self,bitstream):
 		if len(bitstream) != 6:
 			raise ValueError("Input bitstream must be 6 digits long")
