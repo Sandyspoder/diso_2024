@@ -2,7 +2,7 @@ import math
 from constants import *
 # All objects that have a physical collision interaction are defined here
 
-class Enviroment():
+class Enviroment:
 	def __init__():
 		self._x_upper = ENVIROMENT_X_UPPER_BOUND
 		self._x_lower = ENVIROMENT_X_LOWER_BOUND
@@ -22,6 +22,13 @@ class Obstacles():
 	def get_y(self): return self._y
 	def get_z(self): return self._z
 	def get_radius(self): return self._radius
+
+	def show_position(self):
+		print(f"""
+X position: {self._x}
+Y position: {self._y}
+Z position: {self._z} 
+""")
 	
 # This object creates a cylinder starting at x,y,z= 0 with a radius of BUILDING_RADIUS up to z 
 class Building(Obstacles):
@@ -40,6 +47,13 @@ class Drone(Obstacles):
 	def get_horizontal_angle(self): return self._horizontal_angle
 	def get_vertical_angle(self): return self._vertical_angle
 	def get_velocity(self): return self._speed
+
+	def show_attributes(self):
+		print(f"""
+Horizontal Angle: {self._horizontal_angle}
+Vertical Angle: {self._vertical_angle}
+Speed : {self._speed} 
+""")
 
 	# Updates the Drone parameters based on the input parameters
 	def user_input_updates(self,input):
@@ -62,9 +76,9 @@ class Drone(Obstacles):
 
 	# Update the cartesian coordinates, given any deviation from the y axis starting orientation
 	def update_position(self):
-		self.x += self._speed * math.sin(math.radians(self._horizontal_angle))
-		self.y += self._speed * math.cos(math.radians(self._horizontal_angle))
-		self.z += self._speed * math.sin(math.radians(self._vertical_angle))
+		self._x += self._speed * math.sin(math.radians(self._horizontal_angle))
+		self._y += self._speed * math.cos(math.radians(self._horizontal_angle))
+		self._z += self._speed * math.sin(math.radians(self._vertical_angle))
 
 	#  Shows building to drone if in rendering distance
 	def render_building(self):

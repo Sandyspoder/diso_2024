@@ -27,3 +27,22 @@ DRONE_VERTICAL_ANGLE = 0
 # Angular Velocity units are degrees per second
 DRONE_HORIZONTAL_TURNING_SPEED = 2
 DRONE_VERTICAL_TURNING_SPEED = 1
+
+# define valid movement options to bitstream values
+MOVEMENT_DICT = {
+	"thrust":{
+		"accelerate":"01",
+		"decelerate":"10",
+		"neutral":"00"
+	},
+	"turn":{
+		"turn_left":"01",
+		"turn_right":"10",
+		"no_turn":"00"
+	},
+	"tilt":{
+		"tilt_up":"01",
+		"tilt_down":"10",
+		"no_tilt":"00"
+	}
+}

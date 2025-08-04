@@ -13,6 +13,17 @@ class Input():
 	def get_right(self): return self.__right
 	def get_up(self): return self.__up
 	def get_down(self): return self.__down
+
+	def show_attributes(self):
+		print(
+			f"""
+Acceleration Boolean: {self.__accelerate}
+Deceleration Boolean: {self.__decelerate}
+Left Boolean: {self.__left}
+Right Boolean: {self.__right}
+Up Boolean: {self.__up}
+Down Boolean: {self.__down}
+			 """)
 	
 	# Converts from a six long bit stream to drone input object, (0:2 for acceleration, 2:4 for horizontal turning, 4:6 for vertical turning)
 	def convert_bitstream(self,bitstream):
