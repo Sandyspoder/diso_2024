@@ -11,11 +11,11 @@ class BitStream:
 		# take the first value of the dict keys and find its bitstream length
 		# assume that the dictionary keys are the same length
 		self.__movement_dict_list = list(map(lambda x: len(list(x[1].values())[0]), MOVEMENT_DICT.items()))
-		self.__total_len = sum(self.__movement_dict_list)
-		self.__stream = "".zfill(self.__total_len)
+		self.__movement_len = sum(self.__movement_dict_list)
+		self.__stream = "".zfill(self.__movement_len)
 
 	def get_stream(self): return self.__stream
-	def get_total_len(self): return self.__total_len
+	def get_total_len(self): return self.__movement_len
 	def get_individual_movements(self): return self.__indivdual_movements
 	def get_movement_dict(self): return self.__movement_dict
 
@@ -32,6 +32,6 @@ class BitStream:
 
 	# create a valid null bitstream string 
 	def create_null_bitstream(self,num):
-		self.__stream = "".zfill(self.__total_len)
+		self.__stream = "".zfill(self.__movement_len)
 		
 

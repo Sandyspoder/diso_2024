@@ -12,7 +12,7 @@ class Enviroment:
 		self._z_lower = ENVIROMENT_Z_LOWER_BOUND
 
 class Obstacles():
-	def __init__(self,x,y,z,radius):
+	def __init__(self,x,y,z,radius = 0):
 		self._x = x
 		self._y = y
 		self._z = z
@@ -135,3 +135,9 @@ Speed : {self._speed}
 			return True
 		
 		return False
+
+	# returns the square distance to the end point 
+	def distance_from_end(self,end_point):
+		return ((self._x-end_point.get_x())**2 + (self._y-end_point.get_y())**2 + (self._z-end_point.get_z())**2 )
+
+		
